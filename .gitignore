@@ -27,6 +27,7 @@ jest-html-reporters-*.html
 ### Editor / OS files
 .vscode/
 .idea/
+.cursor/
 .DS_Store
 Thumbs.db
 
