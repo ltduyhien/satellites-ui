@@ -7,20 +7,21 @@ import { RouterProvider } from 'react-router-dom'
 // Takes a router object (created with createBrowserRouter) and renders the matched routes.
 
 import { AuthProvider } from './providers/AuthProvider'
-// AuthProvider: Wraps the app with auth context so any component can access
-// isAuthenticated, userId, login(), and logout() via useAuth().
+import { ThemeProvider } from './providers/ThemeProvider'
+// ThemeProvider: Wraps the app with theme context. Syncs dark/light to <html> and localStorage.
 
+import { ThemeSwitch } from '@/shared/ui/theme-switch'
+// ThemeSwitch: Fixed bottom-right toggle for dark/light mode.
 import { router } from './router'
 // router: The route configuration — maps URLs to page components with layout nesting.
 
 export function App() {
   return (
     <AuthProvider>
-      {/* AuthProvider must wrap RouterProvider because route guards (ProtectedRoute)
-          need to call useAuth() — which requires the auth context to exist above them. */}
-      <RouterProvider router={router} />
-      {/* RouterProvider: Renders the matched route based on the current browser URL.
-          It reads from the router config and renders the correct layout + page. */}
+      <ThemeProvider>
+        <RouterProvider router={router} />
+        <ThemeSwitch />
+      </ThemeProvider>
     </AuthProvider>
   )
 }

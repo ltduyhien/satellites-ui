@@ -1,7 +1,11 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Apply saved theme before React mounts to avoid flash of wrong theme. -->
+    <script>
+      (function(){var t=localStorage.getItem('theme')||'dark';var r=document.documentElement;r.classList.remove('light','dark');r.classList.add(t)}());
+    </script>
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mars Command Station</title>

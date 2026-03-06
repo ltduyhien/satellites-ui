@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTheme } from '@/shared/hooks/useTheme'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
@@ -24,8 +25,10 @@ export function LoginForm() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const { theme } = useTheme()
   const { login } = useAuth()
   const navigate = useNavigate()
+  const isDark = theme === 'dark'
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -56,12 +59,22 @@ export function LoginForm() {
   }
 
   return (
-    <Card className="gap-0 border border-mars-border bg-mars-overlay p-10 shadow-none outline-none ring-0 backdrop-blur-[2px]">
+    <Card
+      className={`gap-0 border p-10 shadow-none outline-none ring-0 backdrop-blur-[2px] ${
+        isDark
+          ? 'border-mars-border bg-mars-overlay'
+          : 'border-background bg-background'
+      }`}
+    >
       <CardHeader className="gap-1 p-0">
-        <CardTitle className="text-xl text-white">
+        <CardTitle
+          className={`text-xl ${isDark ? 'text-white' : 'text-neutral-900'}`}
+        >
           Secure terminal access
         </CardTitle>
-        <CardDescription className="text-[0.8125rem] text-mars-muted">
+        <CardDescription
+          className={`text-[0.8125rem] ${isDark ? 'text-mars-muted' : 'text-neutral-600'}`}
+        >
           Enter your credentials to access the terminal
         </CardDescription>
       </CardHeader>
@@ -75,7 +88,16 @@ export function LoginForm() {
             <div className="space-y-2">
               <Label
                 htmlFor="userId"
-                className={`text-sm font-medium ${error && (error === ERROR_FIELDS_REQUIRED || error === ERROR_USERNAME_REQUIRED || error === ERROR_INVALID_CREDENTIALS) ? 'text-mars-error' : 'text-mars-muted'}`}
+                className={`text-sm font-medium ${
+                  error &&
+                  (error === ERROR_FIELDS_REQUIRED ||
+                    error === ERROR_USERNAME_REQUIRED ||
+                    error === ERROR_INVALID_CREDENTIALS)
+                    ? 'text-mars-error'
+                    : isDark
+                      ? 'text-mars-muted'
+                      : 'text-neutral-600'
+                }`}
               >
                 Username
               </Label>
@@ -91,14 +113,14 @@ export function LoginForm() {
                 required
                 aria-invalid={!!(error && (error === ERROR_FIELDS_REQUIRED || error === ERROR_USERNAME_REQUIRED || error === ERROR_INVALID_CREDENTIALS))}
                 aria-describedby={error && (error === ERROR_FIELDS_REQUIRED || error === ERROR_USERNAME_REQUIRED || error === ERROR_INVALID_CREDENTIALS) ? 'login-error' : undefined}
-                className="rounded-sm"
+                className={`rounded-sm ${!isDark ? 'border-neutral-300 bg-white/95 text-neutral-900 placeholder:text-neutral-500 caret-neutral-900' : ''}`}
               />
             </div>
 
             <div className="space-y-2">
               <Label
                 htmlFor="password"
-                className={`text-sm font-medium ${error ? 'text-mars-error' : 'text-mars-muted'}`}
+                className={`text-sm font-medium ${error ? 'text-mars-error' : isDark ? 'text-mars-muted' : 'text-neutral-600'}`}
               >
                 Password
               </Label>
@@ -114,7 +136,7 @@ export function LoginForm() {
                 required
                 aria-invalid={!!error}
                 aria-describedby={error ? 'login-error' : undefined}
-                className="rounded-sm"
+                className={`rounded-sm ${!isDark ? 'border-neutral-300 bg-white/95 text-neutral-900 placeholder:text-neutral-500 caret-neutral-900' : ''}`}
               />
               {error && (
                 <p
@@ -147,7 +169,9 @@ export function LoginForm() {
       </CardContent>
 
       <CardFooter className="mt-6 p-0">
-        <p className="text-xs leading-normal text-mars-muted">
+        <p
+          className={`text-xs leading-normal ${isDark ? 'text-mars-muted' : 'text-neutral-600'}`}
+        >
           By accessing this terminal, you agree to the Station Operations Protocol.
         </p>
       </CardFooter>
