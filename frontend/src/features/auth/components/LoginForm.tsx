@@ -13,6 +13,12 @@ import {
   CardTitle,
 } from '@/shared/ui/card'
 
+const ERROR_FIELDS_REQUIRED = 'Please fill out all fields.'
+const ERROR_USERNAME_REQUIRED = 'Please fill out username.'
+const ERROR_PASSWORD_REQUIRED = 'Please fill out password.'
+const ERROR_INVALID_CREDENTIALS =
+  'Invalid credentials. Please check your username and password. 5 attempts left.'
+
 export function LoginForm() {
   const [userId, setUserId] = useState('')
   const [password, setPassword] = useState('')
@@ -25,18 +31,25 @@ export function LoginForm() {
     e.preventDefault()
     setError(null)
 
-    if (!userId.trim() || !password.trim()) {
-      setError('Please fill out password.')
+    if (!userId.trim() && !password.trim()) {
+      setError(ERROR_FIELDS_REQUIRED)
+      return
+    }
+    if (!password.trim()) {
+      setError(ERROR_PASSWORD_REQUIRED)
+      return
+    }
+    if (!userId.trim()) {
+      setError(ERROR_USERNAME_REQUIRED)
       return
     }
 
     setIsLoading(true)
     try {
-      await new Promise((r) => setTimeout(r, 5000))
       await login(userId, password)
       navigate('/dashboard', { replace: true })
     } catch {
-      setError('Invalid credentials. Please check your username and password. 5 attempts left.')
+      setError(ERROR_INVALID_CREDENTIALS)
     } finally {
       setIsLoading(false)
     }
@@ -62,7 +75,7 @@ export function LoginForm() {
             <div className="space-y-2">
               <Label
                 htmlFor="userId"
-                className={`text-sm font-medium ${error && error !== 'Please fill out password.' ? 'text-mars-error' : 'text-mars-muted'}`}
+                className={`text-sm font-medium ${error && (error === ERROR_FIELDS_REQUIRED || error === ERROR_USERNAME_REQUIRED || error === ERROR_INVALID_CREDENTIALS) ? 'text-mars-error' : 'text-mars-muted'}`}
               >
                 Username
               </Label>
@@ -76,8 +89,8 @@ export function LoginForm() {
                 onChange={(e) => setUserId(e.target.value)}
                 disabled={isLoading}
                 required
-                aria-invalid={!!(error && error !== 'Please fill out password.')}
-                aria-describedby={error && error !== 'Please fill out password.' ? 'login-error' : undefined}
+                aria-invalid={!!(error && (error === ERROR_FIELDS_REQUIRED || error === ERROR_USERNAME_REQUIRED || error === ERROR_INVALID_CREDENTIALS))}
+                aria-describedby={error && (error === ERROR_FIELDS_REQUIRED || error === ERROR_USERNAME_REQUIRED || error === ERROR_INVALID_CREDENTIALS) ? 'login-error' : undefined}
                 className="rounded-sm"
               />
             </div>
