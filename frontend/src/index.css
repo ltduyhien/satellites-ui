@@ -3,11 +3,22 @@
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
-/* @import "tailwindcss": Tailwind CSS v4 entry point.
-   This single import replaces the old @tailwind base/components/utilities directives.
-   The Vite plugin scans your source files and injects all used utility classes here. */
 
 @theme inline {
+    /* Mars station custom palette — change these to retheme the entire app */
+    --color-mars-500: oklch(0.62 0.14 45);
+    --color-mars-600: oklch(0.55 0.14 45);
+    --color-mars-700: oklch(0.48 0.14 45);
+    --color-mars-foreground: oklch(1 0 0);
+    --color-mars-muted: oklch(1 0 0 / 80%);
+    --color-mars-subtle: oklch(1 0 0 / 8%);
+    --color-mars-border: oklch(1 0 0 / 15%);
+    --color-mars-input-bg: oklch(1 0 0 / 8%);
+    --color-mars-input-border: oklch(1 0 0 / 20%);
+    --color-mars-input-focus: oklch(0.62 0.14 45);
+    --color-mars-overlay: oklch(0 0 0 / 50%);
+    --color-mars-error: oklch(0.65 0.2 25);
+
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
@@ -124,4 +135,14 @@
   body {
     @apply bg-background text-foreground;
     }
+}
+
+/* Keep autofill styling aligned with theme (Input glass / mars-input-bg) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 9999px var(--color-mars-input-bg, oklch(1 0 0 / 8%)) inset !important;
+  -webkit-text-fill-color: var(--color-mars-foreground, #fff) !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
