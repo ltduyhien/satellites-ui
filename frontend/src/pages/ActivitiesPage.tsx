@@ -36,7 +36,7 @@ export function ActivitiesPage() {
     return (
       <div className="space-y-4 pt-2">
         <PageHeader title="Activities" subtitle="Satellite and resource operations" />
-        <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-destructive">
+        <div className="rounded-md border border-destructive/50 bg-destructive/10 px-4 py-3 text-destructive">
           Failed to load: {error.message}
         </div>
         <Button variant="outline" size="sm" onClick={() => refresh()}>
@@ -56,12 +56,12 @@ export function ActivitiesPage() {
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col gap-4 pt-2">
+    <div className="scrollbar-hide-mobile flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto pt-2">
       <PageHeader title="Activities" subtitle="Satellite and resource operations" />
 
       {hasNewData && (
         <div
-          className="flex items-center justify-between gap-4 rounded-lg border border-mars-500/50 bg-mars-500/10 px-4 py-3"
+          className="flex items-center justify-between gap-4 rounded-md border border-mars-500/50 bg-mars-500/10 px-4 py-3"
           role="alert"
         >
           <p className="text-sm font-medium text-foreground">
@@ -78,41 +78,41 @@ export function ActivitiesPage() {
         </div>
       )}
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-hidden sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-        <div className="shrink-0 rounded-lg border border-white bg-white dark:border-border dark:bg-card px-4 py-3">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+        <div className="shrink-0 rounded-md border border-white bg-white dark:border-border dark:bg-card px-4 py-3">
           <p className="text-sm text-muted-foreground">Satellite Status</p>
           <p className="text-lg font-semibold text-sky-500 dark:text-[oklch(0.72_0.12_230)]">{error ? 'Offline' : 'Operational'}</p>
         </div>
-        <div className="shrink-0 rounded-lg border border-white bg-white dark:border-border dark:bg-card px-4 py-3">
+        <div className="shrink-0 rounded-md border border-white bg-white dark:border-border dark:bg-card px-4 py-3">
           <p className="text-sm text-muted-foreground">Satellite Uptime</p>
           <p className="text-lg font-semibold text-sky-500 dark:text-[oklch(0.72_0.12_230)]">{displayUptime}</p>
         </div>
-        <div className="shrink-0 rounded-lg border border-white bg-white dark:border-border dark:bg-card px-4 py-3">
+        <div className="shrink-0 rounded-md border border-white bg-white dark:border-border dark:bg-card px-4 py-3">
           <p className="text-sm text-muted-foreground">Total Ore Sites</p>
           <p className="text-lg font-semibold text-mars-500">
             {acquisitions.reduce((sum, a) => sum + a.ore_sites, 0)}
           </p>
         </div>
-        <div className="shrink-0 rounded-lg border border-white bg-white dark:border-border dark:bg-card px-4 py-3">
+        <div className="shrink-0 rounded-md border border-white bg-white dark:border-border dark:bg-card px-4 py-3">
           <p className="text-sm text-muted-foreground">Ore Discovery Today</p>
           <p className="text-lg font-semibold text-mars-500">{totalOreSitesToday(acquisitions)}</p>
         </div>
-        <div className="shrink-0 rounded-lg border border-white bg-white dark:border-border dark:bg-card px-4 py-3">
+        <div className="shrink-0 rounded-md border border-white bg-white dark:border-border dark:bg-card px-4 py-3">
           <p className="text-sm text-muted-foreground">Last Ore Discovery</p>
           <p className="text-lg font-semibold text-foreground">{lastOreFound(acquisitions)}</p>
         </div>
-        <div className="shrink-0 rounded-lg border border-white bg-white dark:border-border dark:bg-card px-4 py-3">
+        <div className="shrink-0 rounded-md border border-white bg-white dark:border-border dark:bg-card px-4 py-3">
           <p className="text-sm text-muted-foreground">Total Scans</p>
           <p className="text-lg font-semibold text-foreground">{acquisitions.length}</p>
         </div>
-        <div className="flex min-h-0 flex-col overflow-hidden rounded-lg border border-white bg-white dark:border-border dark:bg-card p-6 sm:col-span-2 md:col-span-3 lg:col-span-3">
-          <div className="min-h-0 flex-1">
+        <div className="col-span-2 flex min-h-[320px] flex-col rounded-md border border-white bg-white dark:border-border dark:bg-card p-6 sm:col-span-2 md:col-span-3 lg:col-span-3">
+          <div className="min-h-[260px] flex-1">
             <OreFindingsChart acquisitions={acquisitions} title="Ore Discoveries" />
           </div>
         </div>
-        <div className="flex min-h-0 flex-col overflow-hidden rounded-lg border border-white bg-white dark:border-border dark:bg-card p-6 sm:col-span-2 md:col-span-3 lg:col-span-3">
+        <div className="col-span-2 flex min-h-[320px] flex-col rounded-md border border-white bg-white dark:border-border dark:bg-card p-6 sm:col-span-2 md:col-span-3 lg:col-span-3">
           <h2 className="mb-4 shrink-0 text-base font-semibold">Time Distribution for Ore Discovery</h2>
-          <div className="min-h-0 flex-1">
+          <div className="min-h-[260px] flex-1">
             <TimeDistributionChart acquisitions={acquisitions} />
           </div>
         </div>

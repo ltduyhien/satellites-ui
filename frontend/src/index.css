@@ -158,6 +158,17 @@
   }
 }
 
+/* Hide scrollbar on mobile only */
+@media (max-width: 767px) {
+  .scrollbar-hide-mobile {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide-mobile::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* Humor slider: gradient on track so it shares thumb coordinate system */
 input.humor-slider::-webkit-slider-runnable-track {
   width: 100%;
