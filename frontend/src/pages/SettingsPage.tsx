@@ -17,6 +17,7 @@ function loadHumorSetting(): number {
       if (!Number.isNaN(n) && n >= 0 && n <= 100) return n
     }
   } catch {
+    void 0
   }
   return 0
 }
@@ -25,6 +26,7 @@ function saveHumorSetting(value: number) {
   try {
     localStorage.setItem(HUMOR_STORAGE_KEY, String(value))
   } catch {
+    void 0
   }
 }
 
