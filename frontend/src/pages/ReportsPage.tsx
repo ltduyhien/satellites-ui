@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CheckIcon, Circle, FileUpIcon, XIcon } from 'lucide-react'
 import { useAcquisitionsPolling } from '@/features/acquisitions/hooks/useAcquisitionsPolling'
 import {
-  formatUptime,
   totalOreSitesForMonth,
   totalScansForMonth,
   uniqueDaysForMonth,
@@ -146,23 +145,16 @@ function monthKey(year: number, month: number): string {
 
 interface StatsBlockProps {
   monthLabel: string
-  reportUptime: string
   acquisitions: { timestamp: number; ore_sites: number }[]
   selected: { year: number; month: number }
   isLoading: boolean
 }
 
-function StatsBlock({ monthLabel, reportUptime, acquisitions, selected, isLoading }: StatsBlockProps) {
+function StatsBlock({ monthLabel, acquisitions, selected, isLoading }: StatsBlockProps) {
   return (
     <section className="rounded-lg border border-input bg-muted/30 p-6">
       <h2 className="mb-4 text-base font-semibold">Statistics for {monthLabel}</h2>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
-        <div>
-          <p className="text-sm text-muted-foreground">Satellite Total Uptime</p>
-          <p className="text-lg font-semibold text-sky-500 dark:text-[oklch(0.72_0.12_230)]">
-            {reportUptime}
-          </p>
-        </div>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="text-sm text-muted-foreground">Total Ore Sites</p>
           <p className="text-lg font-semibold text-mars-500">
@@ -215,9 +207,6 @@ export function ReportsPage() {
   const selectedKey = monthKey(selected.year, selected.month)
   const isReported = Boolean(reports[selectedKey])
   const savedReport = reports[selectedKey]
-
-  const daysWithActivity = uniqueDaysForMonth(acquisitions, selected.year, selected.month)
-  const reportUptime = isLoading ? '…' : formatUptime(daysWithActivity * 86400 * 1000)
 
   const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setRejectReason(null)
@@ -370,7 +359,6 @@ export function ReportsPage() {
               <div className="space-y-6">
                 <StatsBlock
                   monthLabel={monthLabel}
-                  reportUptime={reportUptime}
                   acquisitions={acquisitions}
                   selected={selected}
                   isLoading={isLoading}
@@ -414,7 +402,6 @@ export function ReportsPage() {
               <form id="report-form" onSubmit={handleSend} className="flex flex-col gap-6">
                 <StatsBlock
                   monthLabel={monthLabel}
-                  reportUptime={reportUptime}
                   acquisitions={acquisitions}
                   selected={selected}
                   isLoading={isLoading}
