@@ -2,8 +2,10 @@
 // This gives us a single place to attach the JWT auth header, handle errors,
 // and configure the base URL. No feature should call fetch() directly.
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
-// import.meta.env.VITE_API_URL: Vite environment variable for the API base URL.
+import { getApiBaseUrl } from './api-config'
+
+const API_BASE_URL = getApiBaseUrl()
+// In tests, api-config is mocked so import.meta is never used.
 // In development with Vite proxy: '/api' (proxied to localhost:8080).
 // In Docker with nginx: '/api' (proxied to backend:8080).
 // The VITE_ prefix is required — Vite only exposes env vars starting with VITE_ to client code.
@@ -24,27 +26,8 @@ export function getAccessToken(): string | null {
   return accessToken
 }
 
-export interface ApiError {
-  message: string
-  status: number
-}
-
-export function isApiError(e: unknown): e is ApiError {
-  return (
-    typeof e === 'object' &&
-    e !== null &&
-    'message' in e &&
-    typeof (e as ApiError).message === 'string' &&
-    'status' in e &&
-    typeof (e as ApiError).status === 'number'
-  )
-}
-
-export function getApiErrorMessage(e: unknown, fallback = 'Request failed'): string {
-  if (isApiError(e)) return e.message
-  if (e instanceof Error) return e.message
-  return fallback
-}
+export type { ApiError } from './error-utils'
+export { isApiError, getApiErrorMessage } from './error-utils'
 
 export async function api<T>(
   endpoint: string,
@@ -86,7 +69,7 @@ export async function api<T>(
         window.dispatchEvent(new CustomEvent('auth:unauthorized'))
       }
     }
-    const error: ApiError = { message, status: response.status }
+    const error: import('./error-utils').ApiError = { message, status: response.status }
     throw error
   }
 
