@@ -82,7 +82,8 @@ export function SettingsPage() {
               max={100}
               value={humor}
               onChange={handleChange}
-              className="h-2 w-full cursor-pointer appearance-none rounded-full bg-muted accent-mars-500"
+              style={{ '--slider-progress': `${humor}%` } as React.CSSProperties}
+              className="humor-slider h-2 w-full cursor-pointer appearance-none rounded-full bg-transparent accent-mars-500 [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:size-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-0 [&::-webkit-slider-thumb]:bg-mars-500 [&::-webkit-slider-thumb]:shadow-sm [&::-moz-range-track]:rounded-full [&::-moz-range-thumb]:size-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-mars-500"
               aria-valuemin={0}
               aria-valuemax={100}
               aria-valuenow={humor}
