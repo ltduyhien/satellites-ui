@@ -19,6 +19,7 @@ import { LoginPage } from '@/pages/LoginPage'
 import { ActivitiesPage } from '@/pages/ActivitiesPage'
 import { ReportsPage } from '@/pages/ReportsPage'
 import { SettingsPage } from '@/pages/SettingsPage'
+import { SpaceCommandPage } from '@/pages/SpaceCommandPage'
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +49,7 @@ export const router = createBrowserRouter([
         children: [
           { path: '/activities', element: <ActivitiesPage /> },
           { path: '/reports', element: <ReportsPage /> },
+          { path: '/space-command', element: <SpaceCommandPage /> },
           { path: '/settings', element: <SettingsPage /> },
         ],
       },
