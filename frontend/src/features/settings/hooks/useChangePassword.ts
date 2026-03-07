@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { useAuth } from '@/features/auth/hooks/useAuth'
-import { setAccessToken } from '@/shared/api/client'
+import { getApiErrorMessage, isApiError, setAccessToken } from '@/shared/api/client'
 import { getUser, login, updateProfile } from '@/shared/api/endpoints'
 
 export interface ChangePasswordParams {
@@ -40,11 +40,10 @@ export function useChangePassword() {
 
         return { success: true, error: null }
       } catch (err) {
-        const apiErr = err as { message?: string; status?: number }
         const message =
-          apiErr.status === 401
+          isApiError(err) && err.status === 401
             ? 'Incorrect old password.'
-            : apiErr.message || 'Failed to change password.'
+            : getApiErrorMessage(err, 'Failed to change password.')
         return { success: false, error: message }
       } finally {
         setIsLoading(false)

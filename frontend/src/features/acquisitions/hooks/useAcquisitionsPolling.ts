@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
+import { getApiErrorMessage } from '@/shared/api/client'
 import { getAcquisitions, type Acquisition } from '@/shared/api/endpoints'
 
 const POLL_INTERVAL_MS = 30_000
@@ -35,9 +36,7 @@ export function useAcquisitionsPolling() {
       setAcquisitions(data)
     } catch (e) {
       if (cancelledRef.current) return
-      const err = e as { message?: string; status?: number }
-      const message = typeof err?.message === 'string' ? err.message : (e instanceof Error ? e.message : String(e))
-      setError(new Error(message))
+      setError(new Error(getApiErrorMessage(e)))
     } finally {
       if (!cancelledRef.current) setIsLoading(false)
     }
