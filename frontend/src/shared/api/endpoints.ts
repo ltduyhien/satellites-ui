@@ -34,7 +34,7 @@ export interface Acquisition {
   // timestamp: Unix timestamp (seconds since 1970-01-01) of the satellite scan.
   ore_sites: number
   // ore_sites: Number of ore deposit locations detected in this scan.
-  // NOTE: The API docs say "sites" but the actual response uses "ore_sites".
+  // API may return "sites"; getAcquisitions normalizes to ore_sites.
 }
 
 export interface UpdateProfileRequest {

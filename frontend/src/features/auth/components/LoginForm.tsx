@@ -38,12 +38,12 @@ export function LoginForm() {
       setError(ERROR_FIELDS_REQUIRED)
       return
     }
-    if (!password.trim()) {
-      setError(ERROR_PASSWORD_REQUIRED)
-      return
-    }
     if (!userId.trim()) {
       setError(ERROR_USERNAME_REQUIRED)
+      return
+    }
+    if (!password.trim()) {
+      setError(ERROR_PASSWORD_REQUIRED)
       return
     }
 
