@@ -17,10 +17,9 @@ import './index.css'
 import { App } from './app/App'
 // App: The root React component that wires providers and router together.
 
-createRoot(document.getElementById('root')!)
-  // document.getElementById('root'): Find the <div id="root"> in index.html.
-  // The ! (non-null assertion) tells TypeScript this element definitely exists.
-  // If it didn't, we'd get a runtime error — acceptable since index.html always has it.
+const rootEl = document.getElementById('root')
+if (!rootEl) throw new Error('Root element #root not found. Check index.html.')
+createRoot(rootEl)
   .render(
     <StrictMode>
       <App />
