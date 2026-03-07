@@ -65,7 +65,17 @@ const DUMMY_REPORTS: Record<string, SavedReport> = {
 function loadReports(): Record<string, SavedReport> {
   try {
     const raw = localStorage.getItem(REPORTS_STORAGE_KEY)
-    const saved = raw ? JSON.parse(raw) : {}
+    if (!raw) return { ...DUMMY_REPORTS }
+    const parsed = JSON.parse(raw)
+    if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
+      return { ...DUMMY_REPORTS }
+    }
+    const saved: Record<string, SavedReport> = {}
+    for (const [k, v] of Object.entries(parsed)) {
+      if (typeof v === 'object' && v !== null && typeof (v as SavedReport).notes === 'string' && Array.isArray((v as SavedReport).fileNames)) {
+        saved[k] = { notes: (v as SavedReport).notes, fileNames: (v as SavedReport).fileNames }
+      }
+    }
     return { ...DUMMY_REPORTS, ...saved }
   } catch {
     return { ...DUMMY_REPORTS }
