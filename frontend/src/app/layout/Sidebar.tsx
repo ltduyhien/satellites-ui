@@ -63,8 +63,8 @@ export function Sidebar() {
               cn(
                 'flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar',
                 isActive
-                  ? 'bg-black text-mars-500 dark:bg-black/80 dark:text-mars-500'
-                  : 'text-foreground hover:bg-accent hover:text-accent-foreground dark:text-white'
+                  ? 'border border-input bg-background text-mars-500 dark:border-transparent dark:bg-black/80 dark:text-mars-500'
+                  : 'border border-transparent text-foreground hover:bg-accent hover:text-accent-foreground dark:text-white'
               )
             }
           >
