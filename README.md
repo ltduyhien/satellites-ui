@@ -32,7 +32,7 @@ A React frontend for the LARVIS station API — a space-terminal UI for viewing 
 
 ```bash
 git clone <repo-url>
-cd larvis
+cd lavis-ui
 git checkout main
 ```
 
