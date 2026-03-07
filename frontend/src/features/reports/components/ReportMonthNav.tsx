@@ -34,7 +34,7 @@ export function ReportMonthNav({
               type="button"
               onClick={() => onSelectMonth(year, month)}
               className={cn(
-                'flex w-full items-center gap-2.5 rounded-lg py-2.5 pl-3 pr-3 text-left text-sm transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                'flex w-full items-center gap-2.5 rounded-md py-2.5 pl-3 pr-3 text-left text-sm transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                 isActive
                   ? 'border border-input bg-background text-foreground dark:border-transparent'
                   : 'border border-transparent text-muted-foreground hover:bg-background/50 hover:text-foreground'

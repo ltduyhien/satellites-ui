@@ -1,5 +1,6 @@
 export { ReportStatsBlock } from './components/ReportStatsBlock'
 export { ReportMonthNav } from './components/ReportMonthNav'
+export { ReportMonthSelect } from './components/ReportMonthSelect'
 export { ReportViewContent } from './components/ReportViewContent'
 export { ReportEditForm } from './components/ReportEditForm'
 export { ReportFormActions } from './components/ReportFormActions'
