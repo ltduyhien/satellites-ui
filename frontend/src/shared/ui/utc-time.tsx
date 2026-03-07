@@ -22,7 +22,7 @@ export function UtcTime() {
   })
 
   return (
-    <span className="shrink-0 font-normal text-base text-muted-foreground" aria-live="polite">
+    <span className="shrink-0 font-normal text-sm text-muted-foreground" aria-live="polite">
       {datePart}, {timePart} UTC
     </span>
   )
