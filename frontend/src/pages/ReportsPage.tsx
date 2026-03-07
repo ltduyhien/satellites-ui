@@ -59,7 +59,7 @@ export function ReportsPage() {
 
   if (error) {
     return (
-      <div className="flex h-full min-h-0 flex-col gap-4 pt-4">
+      <div className="flex h-full min-h-0 flex-col gap-4 pt-2">
         <PageHeader title="Reporting" subtitle="Monthly reports and analytics" />
         <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-destructive">
           Failed to load data: {error.message}
@@ -69,7 +69,7 @@ export function ReportsPage() {
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col gap-6 pt-4">
+    <div className="flex h-full min-h-0 flex-col gap-4 pt-2">
       <PageHeader title="Reporting" subtitle="Monthly reports and analytics" />
 
       <div className="flex min-h-0 flex-1 overflow-hidden rounded-xl border border-border bg-card">

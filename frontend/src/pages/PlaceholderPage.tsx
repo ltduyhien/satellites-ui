@@ -7,7 +7,7 @@ interface PlaceholderPageProps {
 
 export function PlaceholderPage({ title, subtitle }: PlaceholderPageProps) {
   return (
-    <div className="flex h-full min-h-0 flex-col gap-4 pt-4">
+    <div className="flex h-full min-h-0 flex-col gap-4 pt-2">
       <PageHeader title={title} subtitle={subtitle} />
     </div>
   )

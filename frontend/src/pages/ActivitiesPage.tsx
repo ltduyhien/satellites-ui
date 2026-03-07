@@ -34,7 +34,7 @@ export function ActivitiesPage() {
 
   if (error) {
     return (
-      <div className="space-y-4 pt-4">
+      <div className="space-y-4 pt-2">
         <PageHeader title="Activities" subtitle="Satellite and resource operations" />
         <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-destructive">
           Failed to load: {error.message}
@@ -48,7 +48,7 @@ export function ActivitiesPage() {
 
   if (isLoading && acquisitions.length === 0) {
     return (
-      <div className="pt-4">
+      <div className="pt-2">
         <PageHeader title="Activities" subtitle="Satellite and resource operations" />
         <p className="text-muted-foreground">Loading ore acquisition data…</p>
       </div>
@@ -56,7 +56,7 @@ export function ActivitiesPage() {
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col gap-4 pt-4">
+    <div className="flex h-full min-h-0 flex-col gap-4 pt-2">
       <PageHeader title="Activities" subtitle="Satellite and resource operations" />
 
       {hasNewData && (

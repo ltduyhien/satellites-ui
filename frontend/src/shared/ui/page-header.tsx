@@ -7,10 +7,10 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, subtitle }: PageHeaderProps) {
   return (
-    <div className="flex shrink-0 items-center justify-between pb-6">
-      <h1 className="text-2xl">
+    <div className="flex shrink-0 items-center justify-between pb-4">
+      <h1 className="text-lg">
         <span className="font-bold">{title}</span>
-        <span className="font-normal text-lg"> | {subtitle}</span>
+        <span className="font-normal"> | {subtitle}</span>
       </h1>
       <UtcTime />
     </div>

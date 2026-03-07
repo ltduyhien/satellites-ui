@@ -69,7 +69,7 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col gap-6 pt-4">
+    <div className="flex h-full min-h-0 flex-col gap-4 pt-2">
       <PageHeader title="Settings" subtitle="Station configuration" />
 
       <section className="flex max-w-md flex-col gap-4 rounded-lg border border-input bg-white p-6 dark:bg-muted/30">
