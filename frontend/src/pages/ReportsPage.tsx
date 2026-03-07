@@ -91,6 +91,16 @@ function isAllowedFile(file: File): boolean {
   return Boolean(ext && ALLOWED_EXTENSIONS.includes(ext as (typeof ALLOWED_EXTENSIONS)[number]))
 }
 
+function partitionFiles(chosen: File[]): { allowed: File[]; rejected: string[] } {
+  const allowed: File[] = []
+  const rejected: string[] = []
+  chosen.forEach((f) => {
+    if (isAllowedFile(f)) allowed.push(f)
+    else rejected.push(f.name)
+  })
+  return { allowed, rejected }
+}
+
 function getFileIcon(ext: string): string {
   if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return '🖼'
   return '📄'
@@ -218,47 +228,33 @@ export function ReportsPage() {
   const isReported = Boolean(reports[selectedKey])
   const savedReport = reports[selectedKey]
 
-  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setRejectReason(null)
-    const chosen = Array.from(e.target.files ?? [])
-    const allowed: File[] = []
-    const rejected: string[] = []
-    chosen.forEach((f) => {
-      if (isAllowedFile(f)) {
-        allowed.push(f)
-      } else {
-        rejected.push(f.name)
-      }
-    })
+  const processChosenFiles = useCallback((chosen: File[]) => {
+    const { allowed, rejected } = partitionFiles(chosen)
     if (rejected.length) {
       setRejectReason(
         `Rejected (unsupported): ${rejected.join(', ')}. Allowed: ${ALLOWED_EXTENSIONS.join(', ')}`
       )
     }
     setFiles((prev) => [...prev, ...allowed])
-    e.target.value = ''
   }, [])
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    setRejectReason(null)
-    const chosen = Array.from(e.dataTransfer.files)
-    const allowed: File[] = []
-    const rejected: string[] = []
-    chosen.forEach((f) => {
-      if (isAllowedFile(f)) {
-        allowed.push(f)
-      } else {
-        rejected.push(f.name)
-      }
-    })
-    if (rejected.length) {
-      setRejectReason(
-        `Rejected (unsupported): ${rejected.join(', ')}. Allowed: ${ALLOWED_EXTENSIONS.join(', ')}`
-      )
-    }
-    setFiles((prev) => [...prev, ...allowed])
-  }, [])
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setRejectReason(null)
+      processChosenFiles(Array.from(e.target.files ?? []))
+      e.target.value = ''
+    },
+    [processChosenFiles]
+  )
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault()
+      setRejectReason(null)
+      processChosenFiles(Array.from(e.dataTransfer.files))
+    },
+    [processChosenFiles]
+  )
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault()
