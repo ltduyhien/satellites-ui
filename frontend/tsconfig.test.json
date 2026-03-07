@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.app.json",
   "compilerOptions": {
-    "types": ["jest", "@testing-library/jest-dom", "node"]
+    "types": ["jest", "@testing-library/jest-dom", "node", "vite/client"]
   },
   "include": ["src/**/*.test.ts", "src/**/*.test.tsx"],
   "exclude": []

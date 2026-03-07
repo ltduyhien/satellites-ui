@@ -12,6 +12,9 @@
     // tsconfig.app.json: Governs the src/ directory — your React application code.
     // Has browser-oriented settings (DOM types, JSX, ES2022 target).
 
+    { "path": "./tsconfig.test.json" },
+    // tsconfig.test.json: Test files — Jest types, path alias, excluded from app build.
+
     { "path": "./tsconfig.node.json" }
     // tsconfig.node.json: Governs Node-side files like vite.config.ts.
     // Has Node-oriented settings (Node types, ES2023 target, no DOM).
