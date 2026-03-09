@@ -1,34 +1,14 @@
-// tsconfig.json: Root TypeScript configuration file.
-// This file doesn't compile anything directly — it acts as a "project references" hub
-// that points to the actual config files for different parts of the codebase.
-// This split lets TypeScript check app code and tooling config with different settings.
 {
   "files": [],
-  // files: Empty array means this root config doesn't include any files itself.
-  // All file inclusion is delegated to the referenced configs below.
-
   "references": [
     { "path": "./tsconfig.app.json" },
-    // tsconfig.app.json: Governs the src/ directory — your React application code.
-    // Has browser-oriented settings (DOM types, JSX, ES2022 target).
-
     { "path": "./tsconfig.test.json" },
-    // tsconfig.test.json: Test files — Jest types, path alias, excluded from app build.
-
     { "path": "./tsconfig.node.json" }
-    // tsconfig.node.json: Governs Node-side files like vite.config.ts.
-    // Has Node-oriented settings (Node types, ES2023 target, no DOM).
   ],
-
   "compilerOptions": {
     "baseUrl": ".",
-    // baseUrl: Root for resolving non-relative imports.
-
     "paths": {
       "@/*": ["./src/*"]
     }
-    // paths: Import alias so "@/shared/ui/button" resolves to "./src/shared/ui/button".
-    // Duplicated here from tsconfig.app.json because some tools (shadcn CLI)
-    // only read the root tsconfig.json, not the referenced configs.
   }
 }

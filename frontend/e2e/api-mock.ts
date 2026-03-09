@@ -4,7 +4,7 @@ import { Page } from '@playwright/test'
 export async function mockLarvisApi(page: Page) {
   await page.route('**/api/token', async (route) => {
     const postData = route.request().postDataJSON()
-    const validPasswords = ['1234', 'newpass'] // 1234 = default, newpass = after change-password
+    const validPasswords = ['1234', 'newpass']
     if (postData?.user_id && validPasswords.includes(postData?.password)) {
       await route.fulfill({ json: { access: 'mock-jwt-token' } })
     } else {

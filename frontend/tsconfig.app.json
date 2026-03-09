@@ -1,123 +1,29 @@
-// tsconfig.app.json: TypeScript configuration for the React application source code (src/).
-// These settings tell TypeScript how to type-check and understand your frontend code.
 {
   "compilerOptions": {
-
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    // tsBuildInfoFile: Path where TypeScript stores incremental build cache.
-    // Placed in node_modules/.tmp so it's gitignored and speeds up subsequent type-checks
-    // by only re-checking files that changed.
-
     "target": "ES2022",
-    // target: The JavaScript version TypeScript compiles down to.
-    // ES2022 supports top-level await, class fields, and Array.at() — well supported
-    // by all modern browsers. Vite handles further transpilation if needed.
-
     "useDefineForClassFields": true,
-    // useDefineForClassFields: Use the TC39 standard `Object.defineProperty` semantics
-    // for class fields instead of the legacy TypeScript assignment behavior.
-    // Aligns with how modern JavaScript engines actually handle class fields.
-
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    // lib: Which built-in type definitions to include.
-    // ES2022: Types for modern JS features (Promise, Map, Array.at, etc.).
-    // DOM: Types for browser APIs (document, window, fetch, HTMLElement, etc.).
-    // DOM.Iterable: Types for iterable DOM collections (NodeList.forEach, etc.).
-
     "module": "ESNext",
-    // module: The module system TypeScript outputs.
-    // ESNext = native ES modules (import/export). Vite requires this because it
-    // serves modules natively during development via the browser's ES module support.
-
     "types": ["vite/client", "jest", "@testing-library/jest-dom"],
-    // types: Explicitly include type definitions for Vite's client-side features and Jest globals.
-    // This gives you types for import.meta.env (environment variables),
-    // import.meta.hot (HMR API), and asset imports (e.g. importing .svg files).
-
     "skipLibCheck": true,
-    // skipLibCheck: Skip type-checking of .d.ts declaration files from node_modules.
-    // Dramatically speeds up compilation — library type errors are the library's problem,
-    // not yours. Almost always enabled in modern projects.
-
-    /* Bundler mode */
-
     "moduleResolution": "bundler",
-    // moduleResolution: How TypeScript resolves import paths.
-    // "bundler" mode matches how Vite/Rollup actually resolves imports — supports
-    // package.json "exports" field, conditional imports, and doesn't require file extensions.
-
     "allowImportingTsExtensions": true,
-    // allowImportingTsExtensions: Allows imports with .ts/.tsx extensions
-    // (e.g. import { Foo } from './Foo.tsx'). Only works when noEmit is true,
-    // since the bundler (Vite) handles the actual resolution and stripping.
-
     "verbatimModuleSyntax": true,
-    // verbatimModuleSyntax: Enforces that type-only imports use the `import type` syntax.
-    // This makes it explicit which imports are values (bundled) vs types (erased at build).
-    // Helps bundlers tree-shake more effectively.
-
     "moduleDetection": "force",
-    // moduleDetection: "force" treats every file as an ES module, even without
-    // import/export statements. Prevents accidental global script behavior
-    // where variables leak across files.
-
     "noEmit": true,
-    // noEmit: TypeScript only type-checks — it doesn't output any JavaScript files.
-    // Vite/SWC handles the actual compilation. TypeScript is used purely as a type checker.
-
     "jsx": "react-jsx",
-    // jsx: "react-jsx" uses the automatic JSX runtime introduced in React 17.
-    // This means you don't need `import React from 'react'` at the top of every file
-    // that uses JSX — the compiler injects the import automatically.
-
-    /* Linting */
-
     "strict": true,
-    // strict: Enables all strict type-checking flags at once:
-    // strictNullChecks, strictFunctionTypes, strictBindCallApply, noImplicitAny,
-    // noImplicitThis, alwaysStrict, etc. Catches far more bugs at compile time.
-
     "noUnusedLocals": true,
-    // noUnusedLocals: Error on declared variables that are never read.
-    // Keeps code clean — if you import or declare something, you should use it.
-
     "noUnusedParameters": true,
-    // noUnusedParameters: Error on function parameters that are never used.
-    // Prefix with underscore (_unused) to intentionally mark them as unused.
-
     "erasableSyntaxOnly": true,
-    // erasableSyntaxOnly: Only allow TypeScript syntax that can be erased to produce
-    // valid JavaScript (no enums, no namespaces, no parameter properties).
-    // Ensures compatibility with tools like SWC/esbuild that strip types without
-    // full TypeScript compilation.
-
     "noFallthroughCasesInSwitch": true,
-    // noFallthroughCasesInSwitch: Error when a switch case falls through to the next
-    // without a break/return. Prevents a common source of subtle bugs.
-
     "noUncheckedSideEffectImports": true,
-    // noUncheckedSideEffectImports: Ensures side-effect imports (import './styles.css')
-    // actually resolve to existing files. Catches typos in CSS/asset imports that would
-    // otherwise silently fail.
-
-    /* Path aliases */
-
     "baseUrl": ".",
-    // baseUrl: The root directory for resolving non-relative imports.
-    // Setting it to "." means paths are relative to the frontend/ directory.
-
     "paths": {
       "@/*": ["./src/*"]
     }
-    // paths: Maps import aliases to file system paths.
-    // "@/*" → "./src/*" means `import { Button } from '@/shared/ui/button'`
-    // resolves to `./src/shared/ui/button`.
-    // Avoids deep relative imports like `../../../shared/ui/button`.
-    // Vite also needs this alias configured in vite.config.ts to work at runtime.
   },
-
   "include": ["src"],
   "exclude": ["**/*.test.ts", "**/*.test.tsx"]
-  // exclude: Test files are type-checked by Jest; exclude from app build.
-  // Excludes node_modules, dist, config files, etc. from this config's scope.
 }

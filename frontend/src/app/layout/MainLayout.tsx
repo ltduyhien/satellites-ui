@@ -1,6 +1,4 @@
-// MainLayout.tsx: Layout shell for authenticated pages (dashboard, users, report).
-// Sidebar navigation on the left, content area on the right.
-// On mobile: sidebar is hidden; menu icon in page header opens it as full-width overlay.
+// MainLayout.tsx: Layout shell for authenticated pages.
 
 import { Outlet } from 'react-router-dom'
 import { LayoutProvider, useLayout } from './LayoutContext'
@@ -12,7 +10,6 @@ function MainLayoutInner() {
 
   return (
     <div className="flex h-svh max-h-svh overflow-hidden bg-background text-foreground">
-      {/* Skip link: visible on focus for keyboard users (WCAG 2.4.1) */}
       <a
         href="#main-content"
         className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-4 focus-visible:z-50 focus-visible:rounded focus-visible:bg-primary focus-visible:px-4 focus-visible:py-2 focus-visible:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -20,7 +17,6 @@ function MainLayoutInner() {
         Skip to main content
       </a>
 
-      {/* Sidebar: visible on desktop; fixed overlay on mobile when open */}
       <div
         className={cn(
           'flex flex-col border-r border-border bg-sidebar',
@@ -38,7 +34,6 @@ function MainLayoutInner() {
         <Sidebar />
       </div>
 
-      {/* Mobile sidebar backdrop */}
       {layout.isMobile && layout.isSidebarOpen && (
         <button
           type="button"

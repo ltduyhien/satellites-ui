@@ -1,79 +1,22 @@
-// tsconfig.node.json: TypeScript configuration for Node-side tooling files.
-// This covers vite.config.ts and any other config files that run in Node.js
-// (not in the browser). Separated from tsconfig.app.json because these files
-// need Node types instead of DOM types.
 {
   "compilerOptions": {
-
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    // tsBuildInfoFile: Incremental build cache for the Node config scope.
-    // Separate from the app cache so they don't interfere with each other.
-
     "target": "ES2023",
-    // target: Compile to ES2023 — Node 20 (our Docker build stage) supports this fully.
-    // Slightly newer than the app target because we control the Node version exactly,
-    // unlike browsers where we target a wider compatibility range.
-
     "lib": ["ES2023"],
-    // lib: Only ES2023 standard library types — no DOM types.
-    // Config files run in Node.js, not in a browser, so document/window don't exist here.
-
     "module": "ESNext",
-    // module: ES modules — matches the "type": "module" in package.json.
-    // Vite config files must use ESM (import/export), not CommonJS (require).
-
     "types": ["node"],
-    // types: Include Node.js type definitions (process, path, fs, etc.).
-    // Needed because vite.config.ts may reference Node APIs like path.resolve().
-
     "skipLibCheck": true,
-    // skipLibCheck: Same as in tsconfig.app.json — skip type-checking library .d.ts files
-    // for faster compilation.
-
-    /* Bundler mode */
-
     "moduleResolution": "bundler",
-    // moduleResolution: "bundler" mode, same as the app config.
-    // Vite itself resolves these imports, so we match its resolution strategy.
-
     "allowImportingTsExtensions": true,
-    // allowImportingTsExtensions: Allow .ts extensions in imports.
-    // Consistent with the app config, and harmless since noEmit is true.
-
     "verbatimModuleSyntax": true,
-    // verbatimModuleSyntax: Enforce `import type` for type-only imports.
-    // Same rationale as the app config — clarity and better tree-shaking.
-
     "moduleDetection": "force",
-    // moduleDetection: Treat all files as ES modules.
-    // Prevents accidental global scope leakage.
-
     "noEmit": true,
-    // noEmit: Type-check only — Vite handles executing vite.config.ts directly
-    // via its own transpilation pipeline.
-
-    /* Linting */
-
     "strict": true,
-    // strict: Full strict mode — same reasoning as tsconfig.app.json.
-
     "noUnusedLocals": true,
-    // noUnusedLocals: Flag unused variables in config files.
-
     "noUnusedParameters": true,
-    // noUnusedParameters: Flag unused function parameters.
-
     "erasableSyntaxOnly": true,
-    // erasableSyntaxOnly: Stick to erasable TypeScript syntax for SWC/esbuild compatibility.
-
     "noFallthroughCasesInSwitch": true,
-    // noFallthroughCasesInSwitch: Prevent switch case fallthrough bugs.
-
     "noUncheckedSideEffectImports": true
-    // noUncheckedSideEffectImports: Validate side-effect imports resolve to real files.
   },
-
-  "include": ["vite.config.ts"]
-  // include: Only vite.config.ts is covered by this config.
-  // If you add other Node-side config files (e.g. vitest.config.ts), add them here too.
+  "include": ["vite.config.ts", "playwright.config.ts"]
 }

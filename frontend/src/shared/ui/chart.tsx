@@ -3,7 +3,6 @@ import * as RechartsPrimitive from "recharts"
 
 import { cn } from "@/shared/utils/cn"
 
-// Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
 
 export type ChartConfig = {
@@ -67,7 +66,6 @@ function ChartContainer({
   )
 }
 
-/** Sanitize for safe use in CSS context — prevents XSS via dangerouslySetInnerHTML */
 function sanitizeForCss(value: string): string {
   return String(value)
     .replace(/</g, '\\3c ')
@@ -75,7 +73,6 @@ function sanitizeForCss(value: string): string {
     .replace(/["']/g, '')
 }
 
-/** Restrict to safe CSS identifier chars [a-zA-Z0-9_-] to prevent selector/property injection */
 function sanitizeCssIdentifier(value: string): string {
   return String(value).replace(/[^a-zA-Z0-9_-]/g, '')
 }
@@ -323,7 +320,6 @@ function ChartLegendContent({
   )
 }
 
-// Helper to extract item config from a payload.
 function getPayloadConfigFromPayload(
   config: ChartConfig,
   payload: unknown,

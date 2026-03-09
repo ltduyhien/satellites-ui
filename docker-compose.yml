@@ -1,34 +1,13 @@
-# docker-compose.yml: Orchestrates both backend and frontend services.
-# Running `docker compose up` from the project root builds and starts everything.
-# The two services share a default Docker network, so they can reach each other by service name.
-
 services:
-
   backend:
-  # backend: The pre-compiled LARVIS API server.
-  # We don't modify this — it's the provided binary running inside a minimal container.
     build: ./backend
-    # build: Points to the backend/ directory, which contains its own Dockerfile.
-    # Docker will use that Dockerfile to build the image.
     platform: linux/amd64
-    # platform: The larvis binary is compiled for linux-amd64 architecture.
-    # On ARM Macs (M1/M2/M3), Docker will use Rosetta emulation to run it.
     ports:
       - "8080:8080"
-      # ports: Maps host port 8080 → container port 8080.
-      # In normal use the frontend's nginx proxy handles API routing.
 
   frontend:
-  # frontend: The React app, built and served via nginx.
     build: ./frontend
-    # build: Points to the frontend/ directory with its own multi-stage Dockerfile
-    # (Node to build, nginx to serve).
     ports:
       - "5180:80"
-      # ports: Maps host port 5173 → container port 80 (nginx).
-      # 5173 matches Vite's default dev port so the URL stays familiar.
     depends_on:
       - backend
-      # depends_on: Ensures the backend container starts before the frontend.
-      # The frontend's nginx proxies /api/ requests to http://backend:8080,
-      # so the backend needs to be reachable when the frontend starts serving.
